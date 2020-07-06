@@ -1,0 +1,23 @@
+{
+  "name": "replay-jsx",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "author": "Matt Jennings",
+  "types": "./types.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src/index.js -d lib"
+  },
+  "peerDependencies": {
+    "@replay/core": "^0.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "@babel/plugin-syntax-jsx": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/register": "^7.10.4",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "jest": "^26.1.0"
+  }
+}

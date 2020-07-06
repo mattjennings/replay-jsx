@@ -1,6 +1,7 @@
+import "replay-jsx";
 import { makeSprite, GameProps } from "@replay/core";
 import { Level } from "./level";
-import { Menu } from "./menu";
+import Menu from "./Menu";
 
 type GameState = {
   view: "menu" | "level";
@@ -21,30 +22,31 @@ export const Game = makeSprite<GameProps, GameState>({
   render({ state, updateState, device }) {
     const inMenuScreen = state.view === "menu";
 
-    return [
-      Level({
-        id: `level-${state.attempt}`,
-        paused: inMenuScreen,
-        gameOver: (score) => {
-          updateState((prevState) => {
-            let { highScore } = prevState;
-            if (score > highScore) {
-              highScore = score;
-              device.storage.setStore({ highScore: String(highScore) });
-            }
-            return {
-              ...prevState,
-              view: "menu",
-              highScore,
-            };
-          });
-        },
-      }),
-      inMenuScreen
-        ? Menu({
-            id: "menu",
-            highScore: state.highScore,
-            start: () => {
+    return (
+      <>
+        <Level
+          id={`level-${state.attempt}`}
+          paused={inMenuScreen}
+          gameOver={(score) => {
+            updateState((prevState) => {
+              let { highScore } = prevState;
+              if (score > highScore) {
+                highScore = score;
+                device.storage.setStore({ highScore: String(highScore) });
+              }
+              return {
+                ...prevState,
+                view: "menu",
+                highScore,
+              };
+            });
+          }}
+        />
+        {inMenuScreen && (
+          <Menu
+            id="menu"
+            highScore={state.highScore}
+            start={() => {
               updateState((prevState) => {
                 return {
                   ...prevState,
@@ -52,10 +54,11 @@ export const Game = makeSprite<GameProps, GameState>({
                   attempt: prevState.attempt + 1,
                 };
               });
-            },
-          })
-        : null,
-    ];
+            }}
+          />
+        )}
+      </>
+    );
   },
 });
 

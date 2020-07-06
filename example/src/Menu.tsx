@@ -1,4 +1,4 @@
-import { makeSprite, t } from "@replay/core";
+import { makeSprite } from "@replay/core";
 import { WebInputs } from "@replay/web";
 import { iOSInputs } from "@replay/swift";
 import { isWebInput } from "./utils";
@@ -8,7 +8,7 @@ type MenuProps = {
   highScore: number;
 };
 
-export const Menu = makeSprite<MenuProps, undefined, WebInputs | iOSInputs>({
+export default makeSprite<MenuProps, undefined, WebInputs | iOSInputs>({
   render({ props, device }) {
     const { inputs } = device;
 

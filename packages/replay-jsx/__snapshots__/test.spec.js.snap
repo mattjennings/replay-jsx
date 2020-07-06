@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`injects ReplayJSX 1`] = `
+"import * as ReplayJSX from \\"replay-jsx\\";
+import { makeSprite } from \\"@replay/core\\";
+export const birdWidth = 50;
+export const birdHeight = 40;
+export const Bird = makeSprite({
+  render() {
+    return ReplayJSX.create(ReplayJSX.Fragment, null, ReplayJSX.create(\\"image\\", {
+      fileName: \\"bird.png\\",
+      width: birdWidth,
+      height: birdHeight
+    }));
+  }
+
+});"
+`;
