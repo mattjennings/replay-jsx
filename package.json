@@ -1,5 +1,5 @@
 {
-  "name": "replay-with-jsx",
+  "name": "replay-jsx-monorepo",
   "private": true,
   "version": "1.0.0",
   "main": "index.js",
@@ -8,7 +8,7 @@
   "license": "MIT",
   "workspaces": [
     "example",
-    "packages/replay-jsx"
+    "replay-jsx"
   ],
   "devDependencies": {
     "eslint-plugin-react": "^7.20.3"
