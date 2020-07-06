@@ -1,4 +1,4 @@
-import { makeSprite, t } from "@replay/core";
+import { makeSprite } from "@replay/core";
 import { WebInputs } from "@replay/web";
 import { iOSInputs } from "@replay/swift";
 import { isWebInput } from "./utils";

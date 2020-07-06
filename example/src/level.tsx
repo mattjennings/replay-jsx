@@ -1,4 +1,4 @@
-import { makeSprite, t, Device, DeviceSize } from "@replay/core";
+import { makeSprite, Device, DeviceSize } from "@replay/core";
 import { WebInputs } from "@replay/web";
 import { iOSInputs } from "@replay/swift";
 import { Bird, birdWidth, birdHeight } from "./bird";

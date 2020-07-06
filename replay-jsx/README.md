@@ -19,7 +19,7 @@ Create a .babelrc
 ```
 
 If you're using webpack make sure you have `babel-loader` setup. If you're using `ts-loader`, you can view an
-example of how to configure it [here](/example/web/webpack.config.js)
+example of how to configure it [here](../example/web/webpack.config.js)
 
 ### Typescript
 

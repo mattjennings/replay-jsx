@@ -8,15 +8,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const babelLoader = {
   loader: "babel-loader",
   options: {
-    plugins: [
-      [
-        "@babel/plugin-transform-react-jsx",
-        {
-          pragma: "Replay.create",
-          pragmaFrag: "Replay.Fragment",
-        },
-      ],
-    ],
+    plugins: ["replay-jsx/babel"],
   },
 };
 
@@ -59,9 +51,6 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       ASSET_NAMES: JSON.stringify(getAssetNames()),
-    }),
-    new webpack.ProvidePlugin({
-      Replay: path.resolve(__dirname, "../replay.js"),
     }),
   ],
   output: {
