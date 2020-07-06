@@ -2,6 +2,9 @@ import { t } from "@replay/core";
 
 const flatMap = (arr, fn) => arr.map(fn).reduce((x, y) => x.concat(y), []);
 
+/**
+ * Creates a Replay element from a JSX tag
+ */
 export const create = (tag, props, ...children) => {
   // custom component
   if (typeof tag === "function") {

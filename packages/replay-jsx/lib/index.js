@@ -12,6 +12,10 @@ var flatMap = function flatMap(arr, fn) {
     return x.concat(y);
   }, []);
 };
+/**
+ * Creates a Replay element from a JSX tag
+ */
+
 
 var create = function create(tag, props) {
   // custom component

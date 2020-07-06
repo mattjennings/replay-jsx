@@ -8,17 +8,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const babelLoader = {
   loader: "babel-loader",
   options: {
-    presets: ["@babel/preset-env"],
-    plugins: [
-      [
-        "@babel/plugin-transform-react-jsx",
-        {
-          pragma: "ReplayJSX.create",
-          pragmaFrag: "ReplayJSX.Fragment",
-        },
-      ],
-      "replay-jsx/babel-plugin",
-    ],
+    plugins: ["replay-jsx/babel"],
   },
 };
 
@@ -29,7 +19,7 @@ module.exports = {
     rules: [
       {
         test: /\.ts(x?)$/,
-        exclude: /node_modules|replay-jsx/,
+        exclude: /node_modules/,
         use: [
           babelLoader,
           {
@@ -42,7 +32,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /node_modules|replay-jsx/,
+        exclude: /node_modules/,
         use: [babelLoader],
       },
     ],
@@ -62,9 +52,6 @@ module.exports = {
     new webpack.DefinePlugin({
       ASSET_NAMES: JSON.stringify(getAssetNames()),
     }),
-    // new webpack.ProvidePlugin({
-    //   Replay: path.resolve(__dirname, "../replay.js"),
-    // }),
   ],
   output: {
     filename: "index.js",

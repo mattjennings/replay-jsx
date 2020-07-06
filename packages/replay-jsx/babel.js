@@ -1,5 +1,16 @@
-module.exports = function ({ types: t }) {
+// modified version of https://github.com/vslinko/babel-plugin-react-require
+
+const transformJsxPlugin = require("@babel/plugin-transform-react-jsx").default;
+
+module.exports = function (api) {
+  const { types: t } = api;
   const plugin = {
+    inherits: () =>
+      transformJsxPlugin(api, {
+        pragma: "ReplayJSX.create",
+        pragmaFrag: "ReplayJSX.Fragment",
+      }),
+
     visitor: {
       Program: {
         enter(path, { file }) {

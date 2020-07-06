@@ -21,8 +21,6 @@
     "@replay/web": "0.2.0"
   },
   "devDependencies": {
-    "@babel/plugin-transform-react-jsx": "^7.10.4",
-    "@babel/preset-env": "^7.10.4",
     "@replay/test": "0.2.0",
     "@types/jest": "^25.2.1",
     "@types/node": "^13.13.4",
