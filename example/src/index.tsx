@@ -1,7 +1,7 @@
 import "replay-jsx";
 import { makeSprite, GameProps } from "@replay/core";
 import { Level } from "./level";
-import Menu from "./Menu";
+import { Menu } from "./menu";
 
 type GameState = {
   view: "menu" | "level";

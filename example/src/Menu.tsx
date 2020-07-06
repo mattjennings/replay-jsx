@@ -8,7 +8,7 @@ type MenuProps = {
   highScore: number;
 };
 
-export default makeSprite<MenuProps, undefined, WebInputs | iOSInputs>({
+export const Menu = makeSprite<MenuProps, undefined, WebInputs | iOSInputs>({
   render({ props, device }) {
     const { inputs } = device;
 
