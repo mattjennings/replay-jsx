@@ -1,6 +1,6 @@
 # Replay with JSX
 
-This is a proof-of-concept for using JSX to with [Replay](https://github.com/edbentley/replay)
+This is a proof-of-concept for using JSX with [Replay](https://github.com/edbentley/replay)
 
 Things to note:
 
@@ -35,7 +35,6 @@ is equivalent to
 ```js
 
 render() {
-
   return [
     t.text({...props}),
     t.text({...props}),
