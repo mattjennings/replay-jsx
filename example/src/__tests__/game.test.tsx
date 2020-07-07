@@ -24,7 +24,7 @@ test("Can reach a score of 2", () => {
     getTexture,
     jumpToFrame,
     audio,
-  } = testSprite(Game(gameProps), gameProps, {
+  } = testSprite(<Game {...gameProps} />, gameProps, {
     initInputs,
     // First two pipes will have gap in middle, third pipe lower down
     initRandom: [0.5, 0.5, 0],

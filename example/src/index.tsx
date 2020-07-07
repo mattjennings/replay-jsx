@@ -12,6 +12,7 @@ type GameState = {
 export const Game = makeSprite<GameProps, GameState>({
   init({ device }) {
     const store = device.storage.getStore();
+
     return {
       view: "menu",
       attempt: 0,
