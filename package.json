@@ -6,6 +6,9 @@
   "repository": "https://github.com/mattjennings/replay-with-jsx",
   "author": "Matt Jennings <mattjennings44@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "cd replay-jsx && yarn build"
+  },
   "workspaces": [
     "example",
     "replay-jsx"

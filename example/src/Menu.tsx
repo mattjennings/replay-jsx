@@ -1,29 +1,29 @@
-import { makeSprite } from "@replay/core";
-import { WebInputs } from "@replay/web";
-import { iOSInputs } from "@replay/swift";
-import { isWebInput } from "./utils";
+import { makeSprite } from '@replay/core'
+import { WebInputs } from '@replay/web'
+import { iOSInputs } from '@replay/swift'
+import { isWebInput } from './utils'
 
 type MenuProps = {
-  start: () => void;
-  highScore: number;
-};
+  start: () => void
+  highScore: number
+}
 
 export const Menu = makeSprite<MenuProps, undefined, WebInputs | iOSInputs>({
   render({ props, device }) {
-    const { inputs } = device;
+    const { inputs } = device
 
     if (
       inputs.pointer.justReleased ||
-      (isWebInput(inputs) && inputs.keysJustPressed[" "])
+      (isWebInput(inputs) && inputs.keysJustPressed[' '])
     ) {
-      props.start();
+      props.start()
     }
 
     return (
       <>
         <text
           text={
-            isWebInput(inputs) ? "Click or Space Bar to Start" : "Tap to Start"
+            isWebInput(inputs) ? 'Click or Space Bar to Start' : 'Tap to Start'
           }
           color="white"
           y={100}
@@ -32,9 +32,9 @@ export const Menu = makeSprite<MenuProps, undefined, WebInputs | iOSInputs>({
           text={`High score: ${props.highScore}`}
           color="white"
           y={150}
-          font={{ name: "Courier", size: 24 }}
+          font={{ name: 'Courier', size: 24 }}
         />
       </>
-    );
+    )
   },
-});
+})

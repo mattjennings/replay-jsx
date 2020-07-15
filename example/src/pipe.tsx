@@ -1,29 +1,29 @@
-import { makeSprite, t, DeviceSize } from "@replay/core";
+import { makeSprite, DeviceSize } from '@replay/core'
 
 export type PipeT = {
-  x: number;
-  gapY: number;
-  passed: boolean;
-};
+  x: number
+  gapY: number
+  passed: boolean
+}
 
-export const pipeWidth = 40;
-export const pipeGap = 170;
+export const pipeWidth = 40
+export const pipeGap = 170
 
 type PipeProps = {
-  pipe: PipeT;
-};
+  pipe: PipeT
+}
 
 export const Pipe = makeSprite<PipeProps>({
   render({ props, device }) {
-    const { size } = device;
-    const { pipe } = props;
+    const { size } = device
+    const { pipe } = props
 
     const {
       yUpperTop,
       yUpperBottom,
       yLowerTop,
       yLowerBottom,
-    } = getPipeYPositions(size, pipe.gapY);
+    } = getPipeYPositions(size, pipe.gapY)
 
     return (
       <>
@@ -34,15 +34,15 @@ export const Pipe = makeSprite<PipeProps>({
           y={(yUpperTop + yUpperBottom) / 2}
         />
         <rectangle
-          color={"green"}
+          color={'green'}
           width={pipeWidth}
           height={yLowerTop - yLowerBottom}
           y={(yLowerTop + yLowerBottom) / 2}
         />
       </>
-    );
+    )
   },
-});
+})
 
 export function getPipeYPositions(size: DeviceSize, gapY: number) {
   return {
@@ -50,5 +50,5 @@ export function getPipeYPositions(size: DeviceSize, gapY: number) {
     yUpperBottom: gapY + pipeGap / 2,
     yLowerTop: gapY - pipeGap / 2,
     yLowerBottom: -size.height / 2 - size.heightMargin,
-  };
+  }
 }

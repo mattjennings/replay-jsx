@@ -1,24 +1,24 @@
-import { makeSprite, Device, DeviceSize } from "@replay/core";
-import { WebInputs } from "@replay/web";
-import { iOSInputs } from "@replay/swift";
-import { Bird, birdWidth, birdHeight } from "./bird";
-import { isWebInput } from "./utils";
-import { Pipe, PipeT, pipeWidth, pipeGap, getPipeYPositions } from "./pipe";
+import { makeSprite, Device, DeviceSize } from '@replay/core'
+import { WebInputs } from '@replay/web'
+import { iOSInputs } from '@replay/swift'
+import { Bird, birdWidth, birdHeight } from './bird'
+import { isWebInput } from './utils'
+import { Pipe, PipeT, pipeWidth, pipeGap, getPipeYPositions } from './pipe'
 
-const speedX = 2;
-const birdX = 0;
+const speedX = 2
+const birdX = 0
 
 type LevelProps = {
-  paused: boolean;
-  gameOver: (score: number) => void;
-};
+  paused: boolean
+  gameOver: (score: number) => void
+}
 
 type LevelState = {
-  birdY: number;
-  birdGravity: number;
-  pipes: PipeT[];
-  score: number;
-};
+  birdY: number
+  birdGravity: number
+  pipes: PipeT[]
+  score: number
+}
 
 export const Level = makeSprite<LevelProps, LevelState, WebInputs | iOSInputs>({
   init({ device, props }) {
@@ -27,64 +27,64 @@ export const Level = makeSprite<LevelProps, LevelState, WebInputs | iOSInputs>({
       birdGravity: -12,
       pipes: props.paused ? [] : [newPipe(device)],
       score: 0,
-    };
+    }
   },
 
   loop({ props, state, device }) {
     if (props.paused) {
-      return state;
+      return state
     }
 
-    const { inputs } = device;
+    const { inputs } = device
 
-    let { birdGravity, birdY, pipes, score } = state;
+    let { birdGravity, birdY, pipes, score } = state
 
-    birdGravity += 0.8;
-    birdY -= birdGravity;
+    birdGravity += 0.8
+    birdY -= birdGravity
 
     if (
       inputs.pointer.justPressed ||
-      (isWebInput(inputs) && inputs.keysJustPressed[" "])
+      (isWebInput(inputs) && inputs.keysJustPressed[' '])
     ) {
-      birdGravity = -12;
+      birdGravity = -12
     }
 
-    const lastPipe = pipes[pipes.length - 1];
+    const lastPipe = pipes[pipes.length - 1]
     if (lastPipe.x < 140) {
       pipes = [...pipes, newPipe(device)]
         // Remove the pipes off screen on left
         .filter(
           (pipe) =>
             pipe.x > -(device.size.width + device.size.widthMargin + pipeWidth)
-        );
+        )
     }
 
     if (didHitPipe(birdY, device.size, pipes)) {
-      device.audio("boop.wav").play();
-      props.gameOver(state.score);
+      device.audio('boop.wav').play()
+      props.gameOver(state.score)
     }
 
     // Move pipes to the left
     pipes = pipes.map((pipe) => {
-      let passed = pipe.passed;
+      let passed = pipe.passed
       if (!passed && pipe.x < birdX - birdWidth / 2 - pipeWidth / 2) {
         // Mark pipe as having passed bird's x position
-        passed = true;
-        score++;
+        passed = true
+        score++
       }
-      return { ...pipe, passed, x: pipe.x - speedX };
-    });
+      return { ...pipe, passed, x: pipe.x - speedX }
+    })
 
     return {
       birdGravity,
       birdY,
       pipes,
       score,
-    };
+    }
   },
 
   render({ state, device }) {
-    const { size } = device;
+    const { size } = device
 
     return (
       <>
@@ -98,7 +98,9 @@ export const Level = makeSprite<LevelProps, LevelState, WebInputs | iOSInputs>({
           x={birdX}
           y={state.birdY}
           rotation={Math.max(-30, state.birdGravity * 3 - 30)}
-        />
+        >
+          <rectangle color="#ff0000" width={32} height={32} />
+        </Bird>
         {state.pipes.map((pipe, index) => (
           <Pipe id={`pipe-${index}`} pipe={pipe} x={pipe.x} />
         ))}
@@ -110,19 +112,19 @@ export const Level = makeSprite<LevelProps, LevelState, WebInputs | iOSInputs>({
           align="left"
         />
       </>
-    );
+    )
   },
-});
+})
 
 function newPipe(device: Device<{}>): PipeT {
-  const height = device.size.height + device.size.heightMargin * 2;
-  const randomY = (height - pipeGap * 2) * (device.random() - 0.5);
+  const height = device.size.height + device.size.heightMargin * 2
+  const randomY = (height - pipeGap * 2) * (device.random() - 0.5)
 
   return {
     x: device.size.width + device.size.widthMargin + 50,
     gapY: randomY,
     passed: false,
-  };
+  }
 }
 
 function didHitPipe(birdY: number, size: DeviceSize, pipes: PipeT[]) {
@@ -131,7 +133,7 @@ function didHitPipe(birdY: number, size: DeviceSize, pipes: PipeT[]) {
     birdY + birdHeight / 2 > size.height / 2 + size.heightMargin
   ) {
     // hit bottom or top
-    return true;
+    return true
   }
   for (const pipe of pipes) {
     if (
@@ -139,26 +141,26 @@ function didHitPipe(birdY: number, size: DeviceSize, pipes: PipeT[]) {
       pipe.x < birdX - birdWidth / 2 - pipeWidth / 2
     ) {
       // bird isn't at pipe
-      continue;
+      continue
     }
     const {
       yUpperTop,
       yUpperBottom,
       yLowerTop,
       yLowerBottom,
-    } = getPipeYPositions(size, pipe.gapY);
+    } = getPipeYPositions(size, pipe.gapY)
     const topPipeRect = {
       x: pipe.x,
       y: (yUpperTop + yUpperBottom) / 2,
       width: pipeWidth,
       height: yUpperTop - yUpperBottom,
-    };
+    }
     const bottomPipeRect = {
       x: pipe.x,
       y: (yLowerTop + yLowerBottom) / 2,
       width: pipeWidth,
       height: yLowerTop - yLowerBottom,
-    };
+    }
     // Check a few points at edges of bird
     const birdPoints = [
       { x: birdX + birdWidth / 2, y: birdY + birdHeight / 2 },
@@ -167,7 +169,7 @@ function didHitPipe(birdY: number, size: DeviceSize, pipes: PipeT[]) {
       { x: birdX, y: birdY - birdHeight / 2 },
       { x: birdX - birdWidth / 2, y: birdY + birdHeight / 2 },
       { x: birdX - birdWidth / 2, y: birdY - birdHeight / 2 },
-    ];
+    ]
     if (
       birdPoints.some(
         (point) =>
@@ -175,10 +177,10 @@ function didHitPipe(birdY: number, size: DeviceSize, pipes: PipeT[]) {
       )
     ) {
       // Bird hit a pipe!
-      return true;
+      return true
     }
   }
-  return false;
+  return false
 }
 
 function pointInRect(
@@ -190,5 +192,5 @@ function pointInRect(
     point.x < rect.x + rect.width / 2 &&
     point.y > rect.y - rect.height / 2 &&
     point.y < rect.y + rect.height / 2
-  );
+  )
 }

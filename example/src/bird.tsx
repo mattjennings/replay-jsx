@@ -1,7 +1,7 @@
-import { makeSprite } from "@replay/core";
+import { makeSprite } from '@replay/core'
 
-export const birdWidth = 50;
-export const birdHeight = 40;
+export const birdWidth = 50
+export const birdHeight = 40
 
 export const Bird = makeSprite({
   render() {
@@ -14,6 +14,6 @@ export const Bird = makeSprite({
           height={birdHeight}
         />
       </>
-    );
+    )
   },
-});
+})

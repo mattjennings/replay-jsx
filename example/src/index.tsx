@@ -1,27 +1,27 @@
-import "replay-jsx";
-import { makeSprite, GameProps } from "@replay/core";
-import { Level } from "./level";
-import { Menu } from "./menu";
+import 'replay-jsx'
+import { makeSprite, GameProps } from '@replay/core'
+import { Level } from './level'
+import { Menu } from './menu'
 
 type GameState = {
-  view: "menu" | "level";
-  attempt: number;
-  highScore: number;
-};
+  view: 'menu' | 'level'
+  attempt: number
+  highScore: number
+}
 
 export const Game = makeSprite<GameProps, GameState>({
   init({ device }) {
-    const store = device.storage.getStore();
+    const store = device.storage.getStore()
 
     return {
-      view: "menu",
+      view: 'menu',
       attempt: 0,
-      highScore: Number(store.highScore || "0"),
-    };
+      highScore: Number(store.highScore || '0'),
+    }
   },
 
   render({ state, updateState, device }) {
-    const inMenuScreen = state.view === "menu";
+    const inMenuScreen = state.view === 'menu'
 
     return (
       <>
@@ -30,17 +30,17 @@ export const Game = makeSprite<GameProps, GameState>({
           paused={inMenuScreen}
           gameOver={(score) => {
             updateState((prevState) => {
-              let { highScore } = prevState;
+              let { highScore } = prevState
               if (score > highScore) {
-                highScore = score;
-                device.storage.setStore({ highScore: String(highScore) });
+                highScore = score
+                device.storage.setStore({ highScore: String(highScore) })
               }
               return {
                 ...prevState,
-                view: "menu",
+                view: 'menu',
                 highScore,
-              };
-            });
+              }
+            })
           }}
         />
         {inMenuScreen && (
@@ -51,27 +51,27 @@ export const Game = makeSprite<GameProps, GameState>({
               updateState((prevState) => {
                 return {
                   ...prevState,
-                  view: "level",
+                  view: 'level',
                   attempt: prevState.attempt + 1,
-                };
-              });
+                }
+              })
             }}
           />
         )}
       </>
-    );
+    )
   },
-});
+})
 
 export const gameProps: GameProps = {
-  id: "Game",
+  id: 'Game',
   size: {
     width: 400,
     height: 600,
     maxHeightMargin: 150,
   },
   defaultFont: {
-    name: "Helvetica",
+    name: 'Helvetica',
     size: 24,
   },
-};
+}
